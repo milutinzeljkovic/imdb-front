@@ -46,7 +46,7 @@
         @blur="$v.checkbox.$touch()"
     ></v-checkbox>
 
-    <v-btn class="mr-4" @click="submit">submit</v-btn>
+    <v-btn class="mr-4" @click="submit" >submit</v-btn>
     <v-btn @click="clear">clear</v-btn>
   </form>
 </template>
@@ -54,6 +54,7 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, maxLength, email } from 'vuelidate/lib/validators'
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     mixins: [validationMixin],
@@ -121,8 +122,19 @@
     },
 
     methods: {
-        submit () {
-            this.$v.$touch()
+        ...mapActions(['registerUser']),
+        async submit () {
+            const userObj = {
+                email: this.email,
+                password: this.password,
+                password_confirmation: this.passwordConfirmation,
+                name: this.name
+            }
+            console.log(userObj);
+            
+            await this.registerUser(userObj);                        
+            this.$router.push('/movies');
+            
       },
         clear () {
             this.$v.$reset()
@@ -133,6 +145,16 @@
             this.password='',
             this.passwordConfirmation=''
       },
+        async onRegisterFormSubmit() {
+            const userObj = {
+                email: this.email,
+                password: this.password,
+                password_confirmation: this.passwordConfirmation,
+                name: this.name
+            }
+            await this.registerUser(userObj);                        
+            this.$router.push('/movies');
+        }
     },
   }
 </script>

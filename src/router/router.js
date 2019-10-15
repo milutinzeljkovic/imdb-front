@@ -22,7 +22,7 @@ const router = new Router({
         name: routes.MOVIE_ROUTE.name,
         component: Movies,
         meta: {
-          requiresAuth: true
+          requiresAuth: false
         }
       },
       {

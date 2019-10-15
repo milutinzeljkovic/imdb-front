@@ -19,7 +19,7 @@
         @click:append="show1 = !show1"
     ></v-text-field>
 
-    <v-btn class="mr-4" @click="submit">submit</v-btn>
+    <v-btn class="mr-4" @click="onLoginFormSubmit">submit</v-btn>
     <v-btn @click="clear">clear</v-btn>
   </form>
 </template>
@@ -27,6 +27,8 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, maxLength, email } from 'vuelidate/lib/validators'
+  import { mapGetters, mapActions } from 'vuex'
+
 
   export default {
     mixins: [validationMixin],
@@ -82,13 +84,24 @@
     },
 
     methods: {
-        submit () {
-            this.$v.$touch()
+      ...mapActions(['loginUser']),
+      async onLoginFormSubmit() {            
+        const userObj = {
+          email: this.email,
+          password: this.password
+        }
+          await this.loginUser(userObj);                        
+          this.$router.push('/movies');
+        },
+        computed: mapGetters(['token', 'user']),
+      
+      submit () {
+        this.$v.$touch()
       },
-        clear () {
-            this.$v.$reset()
-            this.email = ''
-            this.password=''
+      clear () {
+        this.$v.$reset()
+        this.email = ''
+        this.password=''
       },
     },
   }
