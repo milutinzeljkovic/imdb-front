@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Register from '../components/Register';
 import Login from '../components/Login';
+import AddMovie from '../components/AddMovie';
 import Movies from '../components/Movies';
 import routes from './router-names'; 
 Vue.use(Router);
@@ -29,6 +30,14 @@ const router = new Router({
         path: routes.LOGIN_ROUTE.path,
         name: routes.LOGIN_ROUTE.name,
         component: Login,
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: routes.MOVIE_ROUTE_ADD.path,
+        name: routes.MOVIE_ROUTE_ADD.name,
+        component: AddMovie,
         meta: {
           requiresAuth: false
         }

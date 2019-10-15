@@ -15,7 +15,7 @@
         <v-icon>mdi-export</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-navigation-drawer v-model="showDrawer" app >
+    <v-navigation-drawer v-model="showDrawer" app  disable-resize-watcher>
         <v-list-item>
             <v-list-item-content>
                 <v-list-item-title class="title">
@@ -61,9 +61,10 @@ export default {
         return{
             showDrawer: false,
             items: [
-            { title: 'Movies', icon: 'mdi-view-dashboard', path: 'movies'},
-            { title: 'Login', icon: 'mdi-login', path: 'login' },
-            { title: 'Register', icon: 'mdi-login', path: 'register'},
+            { title: 'Movies', icon: 'mdi-view-dashboard', path: '/movies'},
+            { title: 'Login', icon: 'mdi-login', path: '/login' },
+            { title: 'Register', icon: 'mdi-login', path: '/register'},
+            { title: 'Add movie', icon: 'mdi-login', path: '/movies/add'}
             ],
             right: null,
             routeNames
