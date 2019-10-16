@@ -18,9 +18,7 @@ const actions = {
 
 const mutations = {
     
-    setMovies: (state, movies) => {
-        console.log('setMovies',movies);
-        
+    setMovies: (state, movies) => {        
         state.movies = movies
     }
 };
