@@ -7,18 +7,14 @@
     ></v-text-field>
     <v-select
       v-model="genre"
-      :items="items"
+      :items="allGenres.map(genre => genre.name)"
       label="Genre"
       required
-      @change="$v.select.$touch()"
-      @blur="$v.select.$touch()"
     ></v-select>
     <v-text-field
       v-model="image"
       label="Image url"
       required
-      @input="$v.name.$touch()"
-      @blur="$v.name.$touch()"
     ></v-text-field>
         <v-textarea
           name="input-7-1"
@@ -33,6 +29,10 @@
   </form>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import { log } from 'util'
+
+
 export default {
     name: 'AddMovie',
     data: () => ({
@@ -40,16 +40,12 @@ export default {
       genre: null,
       image:'',
       description: '',
-      items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
-      ],
       image: '',
       checkbox: false,
+      genres: allGenres
     }),
     methods:{
+        ...mapActions(['fetchGenres','addMovie']),
         clear () {
             this.$v.$reset()
             this.title = ''
@@ -57,9 +53,23 @@ export default {
             this.select = null
             this.image = ''
       },
-        submit () {
-                        
+      async submit () {
+        const genreObj = this.allGenres.find(e => e.name === this.genre);                
+        const genreId = genreObj.id;
+        const movieObj = {
+          title: this.title,
+          description: this.description,
+          image_url: this.image,
+          genre_id: genreId
         }
+        await this.addMovie(movieObj);
+        this.$router.push('/movies');
+
+      }
+    },
+    computed: mapGetters(['allGenres']),
+    created() {
+      this.fetchGenres();
     }
     
 }

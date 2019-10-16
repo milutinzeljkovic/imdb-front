@@ -6,16 +6,16 @@ class MoviesService extends Service{
     get() {
         return this.getApiClient().get(`${resource}`);
     }
-    getTodo(movieId) {
+    getMovie(movieId) {
         return this.getApiClient().get(`${resource}/${movieId}`);
     }
-    createTodo(movie) {
+    createMovie(movie) {
         return this.getApiClient().post(`${resource}/add`, movie);
     }
-    updateTodo(movie) {
+    updateMovie(movie) {
         return this.getApiClient().put(`${resource}/${movie.id}`,movie);
     }
-    deleteTodo(id) {
+    deleteMovie(id) {
         return this.getApiClient().delete(`${resource}/${id}`);
     }
 }
