@@ -50,6 +50,14 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
+        <v-select
+          v-model="genre"
+          :items="allGenres" item-value="name" item-text="name"
+          label="Filter movies"
+          @input="filterMovies"
+          required
+        ></v-select>
   </div>
 </template>
 <script>
@@ -68,9 +76,23 @@ export default {
             { title: 'Add movie', icon: 'mdi-login', path: '/movies/add'}
             ],
             right: null,
-            routeNames
+            routeNames,
+            genre: null
         }
+    },
+    methods:{
+      ...mapActions(['fetchGenres','fetchMovies']),
+      filterMovies(){
+        
+        this.fetchMovies(this.genre);
+      }
+
+    },
+    computed: mapGetters(['allGenres','user']),
+    created() {
+      this.fetchGenres();
     }
+
 
 }
 </script>

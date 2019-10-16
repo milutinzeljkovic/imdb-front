@@ -11,8 +11,9 @@ const getters = {
 };
 
 const actions = {
-    async fetchMovies({ commit }) {        
-        const response = await moviesService.get();
+    async fetchMovies({ commit },genre) {   
+
+        const response = await moviesService.get(genre);
         commit('setMovies', response.data);
     },
     async addMovie({ commit },movie) {        

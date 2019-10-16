@@ -1,5 +1,6 @@
 <template>
 <div>
+<div v-if="allMovies !== undefined">
 <v-container dark class="grey lighten-5">
     <v-row>
       <v-col
@@ -46,6 +47,10 @@
     </v-row>
 </v-container>
 
+</div>
+<div v-else>
+
+</div>
 </div>
 </template>
 

@@ -3,8 +3,12 @@ import Service from './Service';
 const resource = '/movies';
 
 class MoviesService extends Service{
-    get() {
-        return this.getApiClient().get(`${resource}`);
+    get(genre) {
+        if(genre!== undefined){
+            return this.getApiClient().get(`${resource}?genre=${genre}`);
+        }
+        else
+            return this.getApiClient().get(`${resource}`);
     }
     getMovie(movieId) {
         return this.getApiClient().get(`${resource}/${movieId}`);
