@@ -1,6 +1,6 @@
 <template>
 <div>
-<v-container class="grey lighten-5">
+<v-container dark class="grey lighten-5">
     <v-row>
       <v-col
         cols="12"
@@ -11,7 +11,6 @@
           outlined
           tile
         >
-
         <v-container class="grey lighten-5">
           <v-row no-gutters>
             <v-col
@@ -62,11 +61,18 @@ export default {
     },
     methods:{
       ...mapActions(['fetchMovies']),
+      async getMovies() {
+        try{
+          await this.fetchMovies();
+        }catch(e){
+          this.$router.push('/login');
+        }
+
+      }
     },
     computed: mapGetters(['allMovies']),
     created() {
-      this.fetchMovies();
-      
+      this.getMovies();
     }
 
 }

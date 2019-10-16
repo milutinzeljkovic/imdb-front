@@ -5,7 +5,8 @@
   >
     <v-img
       class="white--text align-start"
-      height="200px"
+      width="200px"
+      max-height="300px"
       :src="movie.image_url"
     >
     </v-img>
