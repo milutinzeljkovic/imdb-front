@@ -7,7 +7,7 @@
     ></v-text-field>
     <v-select
       v-model="genre"
-      :items="allGenres.map(genre => genre.name)"
+      :items="allGenres" item-value="id" item-text="name"
       label="Genre"
       required
     ></v-select>
@@ -54,13 +54,11 @@ export default {
             this.image = ''
       },
       async submit () {
-        const genreObj = this.allGenres.find(e => e.name === this.genre);                
-        const genreId = genreObj.id;
         const movieObj = {
           title: this.title,
           description: this.description,
           image_url: this.image,
-          genre_id: genreId
+          genre_id: this.genre
         }
         await this.addMovie(movieObj);
         this.$router.push('/movies');

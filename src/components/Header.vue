@@ -3,11 +3,11 @@
     <v-toolbar
       dark
       prominent
-      src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+      src="https://static.amazon.jobs/teams/53/images/IMDb_Header_Page.jpg?1501027252"
     >  
       <v-app-bar-nav-icon @click="showDrawer =  !showDrawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Vuetify</v-toolbar-title>
+      <v-toolbar-title>Pocket</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -53,6 +53,7 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import routeNames from '../router/router-names';
 
 export default {
