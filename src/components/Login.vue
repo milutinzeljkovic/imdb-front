@@ -110,6 +110,13 @@
 <style>
     .login-form{
         width: 70%;
-        margin-left: 15%;
+        margin-left: 25%;
+    }
+    @media (max-width: 500px) {
+        .login-form{
+        width: 90%;
+        margin-left: 5%;
+
+    }
     }
 </style>

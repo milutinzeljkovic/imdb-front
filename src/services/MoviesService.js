@@ -20,5 +20,5 @@ class MoviesService extends Service{
     }
 }
 
-export default TodosRepository;
+export default MoviesService;
 
