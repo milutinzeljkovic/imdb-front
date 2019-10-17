@@ -82,9 +82,12 @@ export default {
     },
     methods:{
       ...mapActions(['fetchGenres','fetchMovies']),
-      filterMovies(){
-        
-        this.fetchMovies(this.genre);
+      async filterMovies(){
+        try{
+          await this.fetchMovies(this.genre);
+        }catch(e){
+          this.$route.push('/login');
+        }
       }
 
     },

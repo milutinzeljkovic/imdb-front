@@ -3,6 +3,10 @@
     class="mx-auto"
     max-width="900"
   >
+  <v-list-item
+        :to="{path: `/movies/${movie.id}`}"
+          link   
+      >
     <v-img
       class="white--text align-start"
       width="200px"
@@ -11,27 +15,10 @@
     >
     </v-img>
 
-    <v-card-title>{{movie.title}}</v-card-title>
-
     <v-card-text class="text--primary">
-      <div>{{movie.description}}</div>
+      <div><h2>{{movie.title}}</h2></div>
     </v-card-text>
-
-    <v-card-actions>
-      <v-btn
-        color="orange"
-        text
-      >
-        Share
-      </v-btn>
-
-      <v-btn
-        color="orange"
-        text
-      >
-        Explore
-      </v-btn>
-    </v-card-actions>
+    </v-list-item>
   </v-card>
 </template>
 
