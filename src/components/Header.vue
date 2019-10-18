@@ -20,9 +20,6 @@
         v-model="searchTerm"
         single-line
       ></v-text-field>
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
     </div>
       
 
@@ -108,7 +105,8 @@ export default {
         }
       },      
       searchCaller(){
-        this.searchMovies(this.searchTerm);
+        
+        this.searchMovies(this.searchTerm.toLowerCase());
       }
 
 
