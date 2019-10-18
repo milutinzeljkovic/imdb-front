@@ -1,7 +1,5 @@
 <template>
   <form  class = 'add-movie-form'>
-      <p>{{allGenres}}</p>
-
     <v-text-field
       v-model="title"
       label="Title"
@@ -57,19 +55,14 @@ export default {
       },
       async setData(movie){
         movie.genre = movie.genre.split(',')[0].toLowerCase();
-        this.allGenres.map(el => { 
-          console.log(el.name);
-                   
-          if(el.name === movie.genre){
-            console.log(el.name,' ',movie.genre);
-            
+
+        //mapiranje zanra sa omdb na id koji se cuva u bazi
+        this.allGenres.map(el => {                    
+          if(el.name === movie.genre){            
             movie.genre_id = el.id;
           }
         }
-        )
-        console.log(movie.genre);
-        
-        
+        )        
         await this.addMovie(movie);
         this.$router.push('/movies');
                

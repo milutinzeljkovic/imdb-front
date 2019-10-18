@@ -37,9 +37,8 @@ class Service {
         delete this.client.defaults.headers[headerKey];
     }
 
-    getOmdbCient() {
-        console.log('omdb client',this.omdbClient.defaults);
-        
+    getOmdbCient() {    
+        //ovo ne radi, vrati localhost umesto omdb    
         return this.omdbClient;
     }
 

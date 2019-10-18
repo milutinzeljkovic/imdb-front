@@ -27,8 +27,7 @@ class MoviesService extends Service{
         return this.getApiClient().delete(`${resource}/${id}`);
     }
     getMovieOMDB(title) {
-        console.log('get movie omdb');
-        
+        //ovde umesto omdb client uzme obican api client   
         return this.getOmdbCient().get(`&?t=${title}`);
     }
 }
