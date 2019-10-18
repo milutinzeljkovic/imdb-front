@@ -27,11 +27,8 @@
           v-model="description"
           hint="Movie description"
         ></v-textarea>
-
-
     <v-btn class="mr-4" @click="submit">submit</v-btn>
     <v-btn class="mr-4" @click="sumbitOMDB">OMDB</v-btn>
-    <v-btn @click="clear">clear</v-btn>
   </form>
   </v-card>
 </template>
@@ -41,21 +38,27 @@ import { log } from 'util'
 
 export default {
     name: 'AddMovie',
-    data: () => ({
-      title: '',
+    data(){
+      return {
+
+      
+      title: 'asdkjasjkdjaskl',
       genre: null,
       image:'',
       description: '',
       image: '',
       checkbox: false,
       genres: allGenres,
-      omdbMovie: getOmdbMovie
-    }),
+      omdbMovie: getOmdbMovie}
+    },
+    computed:{
+      
+    },
     methods:{
         ...mapActions(['fetchGenres','addMovie','fetchMovieFromOMDB']),
         clear () {
             this.title = ''
-            this.description = 'asdsadas'
+            this.description = ''
             this.select = null
             this.image = ''
       },
