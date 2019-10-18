@@ -11,6 +11,21 @@
 
       <v-spacer></v-spacer>
 
+
+
+    <div class = 'search-div'>
+      <v-text-field
+        hide-details
+        v-on:input="searchCaller"
+        v-model="searchTerm"
+        single-line
+      ></v-text-field>
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+    </div>
+      
+
       <v-btn icon>
         <v-icon>mdi-export</v-icon>
       </v-btn>
@@ -63,12 +78,15 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import routeNames from '../router/router-names';
+import _ from 'lodash'
+
 
 export default {
     name: 'Header',
     data(){
         return{
             showDrawer: false,
+            searchTerm:'',
             items: [
             { title: 'Movies', icon: 'mdi-view-dashboard', path: '/movies'},
             { title: 'Login', icon: 'mdi-login', path: '/login' },
@@ -81,19 +99,24 @@ export default {
         }
     },
     methods:{
-      ...mapActions(['fetchGenres','fetchMovies']),
+      ...mapActions(['fetchGenres','fetchMovies','searchMovies']),
       async filterMovies(){
         try{
           await this.fetchMovies(this.genre);
         }catch(e){
           this.$route.push('/login');
         }
+      },      
+      searchCaller(){
+        this.searchMovies(this.searchTerm);
       }
+
 
     },
     computed: mapGetters(['allGenres','user']),
     created() {
       this.fetchGenres();
+      this.searchCaller = _.debounce(this.searchCaller, 500);
     }
 
 
@@ -101,5 +124,7 @@ export default {
 </script>
 
 <style scoped>
-
+.search-div{
+  display: inline;
+}
 </style>

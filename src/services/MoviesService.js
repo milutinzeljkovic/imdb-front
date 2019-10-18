@@ -10,6 +10,10 @@ class MoviesService extends Service{
         else
             return this.getApiClient().get(`${resource}`);
     }
+    getByTitle(title) {
+        return this.getApiClient().get(`${resource}?title=${title}`);
+    }
+
     getMovie(movieId) {
         return this.getApiClient().get(`${resource}/${movieId}`);
     }

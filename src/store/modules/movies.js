@@ -16,6 +16,10 @@ const actions = {
         const response = await moviesService.get(genre);
         commit('setMovies', response.data);
     },
+    async searchMovies({ commit}, title){
+        const response = await moviesService.getByTitle(title);        
+        commit('setMovies', response.data);
+    },
     async addMovie({ commit },movie) {        
         await moviesService.createMovie(movie);
     },
