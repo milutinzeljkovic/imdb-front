@@ -4,6 +4,7 @@ import Register from '../components/Register';
 import Login from '../components/Login';
 import AddMovie from '../components/AddMovie';
 import Movies from '../components/Movies';
+import MoviePage from '../components/MoviePage';
 import routes from './router-names'; 
 Vue.use(Router);
 
@@ -38,6 +39,14 @@ const router = new Router({
         path: routes.MOVIE_ROUTE_ADD.path,
         name: routes.MOVIE_ROUTE_ADD.name,
         component: AddMovie,
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: routes.SINGLE_MOVIE_PAGE.path,
+        name: routes.SINGLE_MOVIE_PAGE.name,
+        component: MoviePage,
         meta: {
           requiresAuth: false
         }
