@@ -5,19 +5,24 @@ const moviesService = ServiceFactory.get('movies');
 const state = {
     movies: [],
     activeMovie: {},
-    omdbMovie: {}
+    omdbMovie: {},
+    nextPage: 0,
+    previousPage: 0
 };
 
 const getters = {
     allMovies: state => state.movies,
     getActiveMovie: state => state.activeMovie,
-    getOmdbMovie: state => state.omdbMovie
+    getOmdbMovie: state => state.omdbMovie,
+    nextPage: state => state.nextPage,
+    previousPage: state => state.previousPage
 };
 
 const actions = {
     async fetchMovies({ commit },genre) {   
-        const response = await moviesService.get(genre);
+        const response = await moviesService.get(genre,state.nextPage);        
         commit('setMovies', response.data);
+      //  commit('setPages',response.data);
     },
     async searchMovies({ commit}, title){
         const response = await moviesService.getByTitle(title);        
@@ -54,6 +59,26 @@ const mutations = {
             image_url: movie.Poster
         }
         
+    },
+    setPages: (state,data) => {
+        //data.current_page
+        //data.last_page
+        console.log(data.current_page,' ',data.last_page);
+        if(data.current_page === data.last_page){
+            state.nextPage = null;
+        }
+        else{            
+            state.nextPage = data.current_page+1;
+        }
+        if(data.current_page === 1){
+            state.previousPage = null;
+        }
+        else{
+            state.previousPage =data.current_page-1;
+        }        
+
+        console.log(state.nextPage,' ',state.previousPage);
+
     }
 };
 

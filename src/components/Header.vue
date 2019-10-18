@@ -7,20 +7,16 @@
     >  
       <v-app-bar-nav-icon @click="showDrawer =  !showDrawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Pocket</v-toolbar-title>
+      <v-toolbar-title>
+
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
 
 
-    <div class = 'search-div'>
-      <v-text-field
-        hide-details
-        v-on:input="searchCaller"
-        v-model="searchTerm"
-        single-line
-      ></v-text-field>
-    </div>
+
+
       
 
       <v-btn icon>
@@ -28,6 +24,8 @@
       </v-btn>
     </v-toolbar>
     <v-navigation-drawer v-model="showDrawer" app  disable-resize-watcher>
+            <v-icon @click="showDrawer =  !showDrawer">mdi-arrow-left</v-icon>
+
         <v-list-item>
             <v-list-item-content>
                 <v-list-item-title class="title">
@@ -63,13 +61,6 @@
       </v-list>
     </v-navigation-drawer>
 
-        <v-select
-          v-model="genre"
-          :items="allGenres" item-value="name" item-text="name"
-          label="Filter movies"
-          @input="filterMovies"
-          required
-        ></v-select>
   </div>
 </template>
 <script>
@@ -105,7 +96,6 @@ export default {
         }
       },      
       searchCaller(){
-        
         this.searchMovies(this.searchTerm.toLowerCase());
       }
 
@@ -123,6 +113,6 @@ export default {
 
 <style scoped>
 .search-div{
-  display: inline;
+  margin-top:10%;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-<v-container dark class="grey lighten-5">
+<v-container dark class="grey darken-4">
     <v-row>
       <v-col
         cols="12"
@@ -50,8 +50,8 @@
         <v-col cols="auto">
         
           <v-img
-            height="300"
-            width="300"
+            width="300px"
+            max-height="400px"
             :src="getActiveMovie.image_url"
           ></v-img>
         </v-col>
@@ -69,8 +69,10 @@
         cols="6"
         sm="4"
       >
-        <v-container class='description_container'>
-        </v-container>
+       <v-card class="d-inline-block mx-auto">
+          
+       </v-card>
+
         
     
       </v-col>

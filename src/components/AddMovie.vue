@@ -1,4 +1,9 @@
 <template>
+  <v-card 
+    class=" pa-5"
+    max-width="900"
+
+  >
   <form  class = 'add-movie-form'>
     <v-text-field
       v-model="title"
@@ -28,6 +33,7 @@
     <v-btn class="mr-4" @click="sumbitOMDB">OMDB</v-btn>
     <v-btn @click="clear">clear</v-btn>
   </form>
+  </v-card>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'

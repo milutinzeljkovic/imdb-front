@@ -1,4 +1,9 @@
 <template>
+  <v-card 
+    class=" pa-5"
+    max-width="900"
+
+  >
   <form class="login-form">
     <v-text-field
         v-model="email"
@@ -22,6 +27,7 @@
     <v-btn class="mr-4" @click="onLoginFormSubmit">submit</v-btn>
     <v-btn @click="clear">clear</v-btn>
   </form>
+  </v-card>
 </template>
 
 <script>

@@ -1,7 +1,10 @@
 <template>
   <v-app>
     <Header/>
-    <router-view/>
+    <div class="grey darken-4">
+        <router-view/>
+    </div>
+
   </v-app>
 </template>
 

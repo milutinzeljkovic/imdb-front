@@ -1,4 +1,9 @@
 <template>
+  <v-card 
+    class=" pa-5"
+    max-width="900"
+
+  >
   <form class="register-form">
     <v-text-field
         v-model="name"
@@ -49,6 +54,7 @@
     <v-btn class="mr-4" @click="submit" >submit</v-btn>
     <v-btn @click="clear">clear</v-btn>
   </form>
+  </v-card>
 </template>
 
 <script>
