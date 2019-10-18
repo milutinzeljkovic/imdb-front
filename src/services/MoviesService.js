@@ -26,6 +26,11 @@ class MoviesService extends Service{
     deleteMovie(id) {
         return this.getApiClient().delete(`${resource}/${id}`);
     }
+    getMovieOMDB(title) {
+        console.log('get movie omdb');
+        
+        return this.getOmdbCient().get(`&?t=${title}`);
+    }
 }
 
 export default MoviesService;

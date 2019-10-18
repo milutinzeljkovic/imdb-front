@@ -1,5 +1,7 @@
 <template>
   <form  class = 'add-movie-form'>
+      <p>{{allGenres}}</p>
+
     <v-text-field
       v-model="title"
       label="Title"
@@ -25,6 +27,7 @@
 
 
     <v-btn class="mr-4" @click="submit">submit</v-btn>
+    <v-btn class="mr-4" @click="sumbitOMDB">OMDB</v-btn>
     <v-btn @click="clear">clear</v-btn>
   </form>
 </template>
@@ -41,16 +44,35 @@ export default {
       description: '',
       image: '',
       checkbox: false,
-      genres: allGenres
+      genres: allGenres,
+      omdbMovie: getOmdbMovie
     }),
     methods:{
-        ...mapActions(['fetchGenres','addMovie']),
+        ...mapActions(['fetchGenres','addMovie','fetchMovieFromOMDB']),
         clear () {
-            this.$v.$reset()
             this.title = ''
-            this.description = ''
+            this.description = 'asdsadas'
             this.select = null
             this.image = ''
+      },
+      async setData(movie){
+        movie.genre = movie.genre.split(',')[0].toLowerCase();
+        this.allGenres.map(el => { 
+          console.log(el.name);
+                   
+          if(el.name === movie.genre){
+            console.log(el.name,' ',movie.genre);
+            
+            movie.genre_id = el.id;
+          }
+        }
+        )
+        console.log(movie.genre);
+        
+        
+        await this.addMovie(movie);
+        this.$router.push('/movies');
+               
       },
       async submit () {
         const movieObj = {
@@ -62,9 +84,13 @@ export default {
         await this.addMovie(movieObj);
         this.$router.push('/movies');
 
+      },
+      async sumbitOMDB(){
+        await this.fetchMovieFromOMDB(this.title);
+        this.setData(this.getOmdbMovie);
       }
     },
-    computed: mapGetters(['allGenres']),
+    computed: mapGetters(['allGenres','getOmdbMovie']),
     created() {
       this.fetchGenres();
     }

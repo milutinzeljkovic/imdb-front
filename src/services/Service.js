@@ -2,13 +2,17 @@ import axios from 'axios';
 
 const baseDomain = 'http://localhost:8000';
 const baseURL = `${baseDomain}/api`;
+const omdbURL = 'http://www.omdbapi.com/?apikey=c7e52b30';
 
 class Service {
     constructor(){
         this.client = axios.create({
-            
             baseURL
         })
+        this.omdbClient = axios.create({
+            omdbURL
+        })
+
         this.setInterceptor();
     }
     setInterceptor = () => {
@@ -32,6 +36,13 @@ class Service {
     detachHeader(headerKey) {
         delete this.client.defaults.headers[headerKey];
     }
+
+    getOmdbCient() {
+        console.log('omdb client',this.omdbClient.defaults);
+        
+        return this.omdbClient;
+    }
+
 
     getApiClient() {
         return this.client;

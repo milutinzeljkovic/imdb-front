@@ -1,14 +1,17 @@
+import axios from 'axios';
 import { ServiceFactory } from '../../services/ServiceFactory';
 const moviesService = ServiceFactory.get('movies');
 
 const state = {
     movies: [],
-    activeMovie: {}
+    activeMovie: {},
+    omdbMovie: {}
 };
 
 const getters = {
     allMovies: state => state.movies,
-    getActiveMovie: state => state.activeMovie
+    getActiveMovie: state => state.activeMovie,
+    getOmdbMovie: state => state.omdbMovie
 };
 
 const actions = {
@@ -26,7 +29,17 @@ const actions = {
     async getMovie({ commit },movieId) {
         const response = await moviesService.getMovie(movieId);        
         commit('setActiveMovie',response.data[0]);
-    }
+    },
+    async addMovieFromOMDB({ commit },movie) {
+
+    },
+    async fetchMovieFromOMDB({ commit },title){
+        const response = await axios.get(`http://www.omdbapi.com/?apikey=c7e52b30&t=${title}`);
+        commit('setOmdbMovie',response.data);
+
+        
+    }   
+
 };
 
 const mutations = {
@@ -35,6 +48,15 @@ const mutations = {
     },
     setActiveMovie: (state, movie) => {        
         state.activeMovie = movie;        
+    },
+    setOmdbMovie: (state,movie) => {
+        state.omdbMovie = {
+            title: movie.Title,
+            description: movie.Plot,
+            genre: movie.Genre,
+            image_url: movie.Poster
+        }
+        
     }
 };
 
