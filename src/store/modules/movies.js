@@ -30,14 +30,11 @@ const actions = {
         const response = await moviesService.getMovie(movieId);        
         commit('setActiveMovie',response.data[0]);
     },
-    async addMovieFromOMDB({ commit },movie) {
-
-    },
+    //nece kad se odvoji u movieService
     async fetchMovieFromOMDB({ commit },title){
         const response = await axios.get(`http://www.omdbapi.com/?apikey=c7e52b30&t=${title}`);
         commit('setOmdbMovie',response.data);
 
-        
     }   
 
 };
