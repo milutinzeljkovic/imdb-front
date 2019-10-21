@@ -2,6 +2,7 @@
   <v-card 
     class=" pa-5"
     max-width="900"
+    id='card'
 
   >
   <form class="register-form">
@@ -170,11 +171,19 @@
         width: 70%;
         margin-left: 25%;
     }
+        #card{
+      width: 70%;
+        margin-left: 15%;
+    }
     @media (max-width: 500px) {
         .register-form{
         width: 90%;
         margin-left: 5%;
 
     }
+    #card{
+        width: 96%;
+        margin-left: 2%;
+      }
     }
 </style>

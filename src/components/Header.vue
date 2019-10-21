@@ -12,27 +12,18 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-
-
-
-
-
-      
-
-      <v-btn icon>
-        <v-icon>mdi-export</v-icon>
+      <v-btn icon v-if="user!== null" @click="logout">
+        <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-toolbar>
     <v-navigation-drawer v-model="showDrawer" app  disable-resize-watcher>
-            <v-icon @click="showDrawer =  !showDrawer">mdi-arrow-left</v-icon>
-
+            <v-icon @click="showDrawer =  !showDrawer">mdi-close</v-icon>
         <v-list-item>
             <v-list-item-content>
                 <v-list-item-title class="title">
-                    Application
+                    Pocket imdb
                 </v-list-item-title>
                 <v-list-item-subtitle>
-                    subtext
                 </v-list-item-subtitle>
             </v-list-item-content>
         </v-list-item>
@@ -42,11 +33,11 @@
         dense
         nav
       >
-      
         <v-list-item
         :to="{path: item.path}"
           v-for="item in items"
           :key="item.title"
+          v-if="user !== null"
           link
           
         >
@@ -58,6 +49,22 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item
+          :to="{path: item.path}"
+          v-for="item in loginItems"
+          :key="item.title"
+          v-if="user === null"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
       </v-list>
     </v-navigation-drawer>
 
@@ -76,10 +83,12 @@ export default {
             showDrawer: false,
             searchTerm:'',
             items: [
-            { title: 'Movies', icon: 'mdi-view-dashboard', path: '/movies'},
-            { title: 'Login', icon: 'mdi-login', path: '/login' },
-            { title: 'Register', icon: 'mdi-login', path: '/register'},
-            { title: 'Add movie', icon: 'mdi-login', path: '/movies/add'}
+            { title: 'Movies', icon: 'mdi-movie', path: '/movies'},
+            { title: 'Add movie', icon: 'mdi-plus', path: '/movies/add'},
+            ],
+            loginItems:[
+              { title: 'Login', icon: 'mdi-login', path: '/login' },
+              { title: 'Register', icon: 'mdi-login', path: '/register'},
             ],
             right: null,
             routeNames,
@@ -87,14 +96,19 @@ export default {
         }
     },
     methods:{
-      ...mapActions(['fetchGenres','fetchMovies','searchMovies']),
+      ...mapActions(['fetchGenres','fetchMovies','searchMovies','fetchCurrentUser','logoutUser']),
       async filterMovies(){
         try{
           await this.fetchMovies(this.genre);
         }catch(e){
           this.$route.push('/login');
         }
-      },      
+      },   
+      logout(){
+        this.logoutUser();
+        this.$router.push('/login');
+        
+      },  
       searchCaller(){
         this.searchMovies(this.searchTerm.toLowerCase());
       }
@@ -103,6 +117,7 @@ export default {
     },
     computed: mapGetters(['allGenres','user']),
     created() {
+      this.fetchCurrentUser();
       this.fetchGenres();
       this.searchCaller = _.debounce(this.searchCaller, 500);
     }

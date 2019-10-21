@@ -1,4 +1,5 @@
 <template>
+  <div class="grey darken-4">
   <v-app>
     <Header/>
     <div class="grey darken-4">
@@ -6,19 +7,23 @@
     </div>
 
   </v-app>
+</div>
 </template>
 
 <script>
 import Header from './components/Header';
-import Register from './components/Register';
 
 export default {
   name: 'App',
   components: {
-    Header,
-    Register
+    Header
   },
   data: () => ({
   }),
 };
 </script>
+
+<style>
+ 
+
+</style>

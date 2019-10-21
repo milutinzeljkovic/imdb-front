@@ -3,7 +3,7 @@ const usersService = ServiceFactory.get('users');
 
 
 const state = {
-    user: {},
+    user: null,
     token: null
 };
 
@@ -23,9 +23,7 @@ const actions = {
             
         }    
     },
-    async loginUser({ commit }, user) {
-        console.log('logovajne ');
-        
+    async loginUser({ commit }, user) {        
         let response;
         try{
             response = await usersService.login(user);
@@ -48,8 +46,6 @@ const actions = {
     },
 
     async logoutUser( { commit }) {
-
-
         let response;
         try{
             response = await usersService.logoutUser();
@@ -63,7 +59,7 @@ const actions = {
 };
 
 const mutations = {
-    setUser: (state, data) => {
+    setUser: (state, data) => {        
         state.user = data;
     },
     loginUser: (state, data) => {
@@ -73,7 +69,7 @@ const mutations = {
     },
     logoutUser: (state) => {
         state.token = null;
-        state.user = {};
+        state.user = null;
         localStorage.clear();
     },
     registerUser: (state, data) => {
