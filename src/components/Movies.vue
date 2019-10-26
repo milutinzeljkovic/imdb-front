@@ -1,51 +1,79 @@
 <template>
 <div>
 <div v-if="allMovies !== undefined">
-<v-container dark class="grey lighten-5">
-    <v-row>
+<v-container dark class="grey darken-4">
+    <v-card >
+      <div id='filter-div'>
+          <v-select
+          id='select'
+          v-model="genre"
+          :items="allGenres" item-value="name" item-text="name"
+          label="Filter movies"
+          @input="filterMovies"
+          required
+        ></v-select>
+        <v-text-field
+        hide-details
+        v-on:input="searchCaller"
+        v-model="searchTerm"
+        single-line
+      ></v-text-field>
+      </div>
+    </v-card>
+
+    <v-row class="grey darken-4">
       <v-col
+      class="grey darken-4"
         cols="12"
         md="8"
       >
-        <v-card
-          class="pa-2"
-          outlined
-          tile
-        >
-        <v-container class="grey lighten-5">
-          <v-row no-gutters>
+        
+          <v-row no-gutters
+            class="grey darken-4"
+          >
             <v-col
+            class="grey darken-4"
               v-for="movie in allMovies"
               :key="movie.id"
               cols="12"
               sm="12"
             >
-              <v-card
-                class="pa-2"
-                tile
-              >
+           <v-card
+          class="pa-1 grey darken-4"
+          outlined
+          tile
+        >
+
+
                 <MovieCard :movie="movie"/>
-              </v-card>
+                        </v-card>
+
+            </v-col>
+            <v-col>
+              col
             </v-col>
           </v-row>
-        </v-container>
           
-        </v-card>
       </v-col>
       <v-col
         cols="6"
         md="4"
       >
-        <v-card
-          class="pa-2"
-          outlined
-          tile
-        >
-          .col-6 .col-md-4
-        </v-card>
       </v-col>
     </v-row>
 </v-container>
+ <v-footer>
+   
+    <v-spacer></v-spacer>
+
+    <div>
+      <v-icon>mdi-arrow-left</v-icon>
+      <v-icon>mdi-arrow-right</v-icon>
+
+      &copy; {{ new Date().getFullYear() }}
+      
+      </div>
+  </v-footer>
 
 </div>
 <div v-else>
@@ -56,6 +84,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import _ from 'lodash'
+
 import MovieCard from './MovieCard';
 
 
@@ -64,8 +94,15 @@ export default {
     components:{
       MovieCard
     },
+    data(){
+      return{
+        searchTerm:'',
+        genre:''
+      }
+
+    },
     methods:{
-      ...mapActions(['fetchMovies']),
+      ...mapActions(['fetchMovies','searchMovies']),
       async getMovies() {
         try{
           await this.fetchMovies();
@@ -73,11 +110,23 @@ export default {
           this.$router.push('/login');
         }
 
+      },
+      async filterMovies(){
+        try{
+          await this.fetchMovies(this.genre);
+        }catch(e){
+          this.$route.push('/login');
+        }
+      }, 
+      searchCaller(){
+        this.searchMovies(this.searchTerm.toLowerCase());
       }
     },
-    computed: mapGetters(['allMovies']),
+    computed: mapGetters(['allMovies','allGenres',]),
     created() {
       this.getMovies();
+      this.searchCaller = _.debounce(this.searchCaller, 500);
+
     }
 
 }
@@ -87,7 +136,12 @@ export default {
 .grey.lighten-5{
   width: 100%;
 }
-
+#filter-div{
+  display: inline;
+}
+#select{
+  width: 50%;
+}
     @media (max-width: 500px) {
         .grey.lighten-5{
         width: 100%;

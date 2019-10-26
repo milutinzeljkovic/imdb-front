@@ -1,4 +1,10 @@
 <template>
+  <v-card 
+    class=" pa-5"
+    max-width="900"
+    id='card'
+
+  >
   <form class="register-form">
     <v-text-field
         v-model="name"
@@ -49,6 +55,7 @@
     <v-btn class="mr-4" @click="submit" >submit</v-btn>
     <v-btn @click="clear">clear</v-btn>
   </form>
+  </v-card>
 </template>
 
 <script>
@@ -164,11 +171,19 @@
         width: 70%;
         margin-left: 25%;
     }
+        #card{
+      width: 70%;
+        margin-left: 15%;
+    }
     @media (max-width: 500px) {
         .register-form{
         width: 90%;
         margin-left: 5%;
 
     }
+    #card{
+        width: 96%;
+        margin-left: 2%;
+      }
     }
 </style>

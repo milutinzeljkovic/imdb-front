@@ -1,4 +1,9 @@
 <template>
+  <v-card 
+    class=" pa-5"
+    max-width="900"
+    id='card'
+  >
   <form class="login-form">
     <v-text-field
         v-model="email"
@@ -10,11 +15,9 @@
     ></v-text-field>
     <v-text-field
         v-model="password"
-        :rules="[rules.required, rules.min]"
         :type="show1 ? 'text' : 'password'"
         name="input-10-1"
         label="Password"
-        hint="At least 8 characters"
         counter
         @click:append="show1 = !show1"
     ></v-text-field>
@@ -22,6 +25,7 @@
     <v-btn class="mr-4" @click="onLoginFormSubmit">submit</v-btn>
     <v-btn @click="clear">clear</v-btn>
   </form>
+  </v-card>
 </template>
 
 <script>
@@ -77,20 +81,19 @@
         emailErrors () {
             const errors = []
             if (!this.$v.email.$dirty) return errors
-            !this.$v.email.email && errors.push('Must be valid e-mail')
-            !this.$v.email.required && errors.push('E-mail is required')
             return errors
       },
     },
 
     methods: {
-      ...mapActions(['loginUser']),
+      ...mapActions(['loginUser','fetchCurrentUser']),
       async onLoginFormSubmit() {            
         const userObj = {
           email: this.email,
           password: this.password
         }
-          await this.loginUser(userObj);                        
+          await this.loginUser(userObj);   
+          await this.fetchCurrentUser();                     
           this.$router.push('/movies');
         },
         computed: mapGetters(['token', 'user']),
@@ -110,13 +113,20 @@
 <style>
     .login-form{
         width: 70%;
-        margin-left: 25%;
+        margin-left: 15%;
+    }
+    #card{
+      width: 70%;
+        margin-left: 15%;
     }
     @media (max-width: 500px) {
-        .login-form{
+      .login-form{
         width: 90%;
         margin-left: 5%;
-
-    }
+      }
+      #card{
+        width: 96%;
+        margin-left: 2%;
+      }
     }
 </style>

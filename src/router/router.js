@@ -24,7 +24,7 @@ const router = new Router({
         name: routes.MOVIE_ROUTE.name,
         component: Movies,
         meta: {
-          requiresAuth: false
+          requiresAuth: true
         }
       },
       {
@@ -40,7 +40,7 @@ const router = new Router({
         name: routes.MOVIE_ROUTE_ADD.name,
         component: AddMovie,
         meta: {
-          requiresAuth: false
+          requiresAuth: true
         }
       },
       {
@@ -48,7 +48,7 @@ const router = new Router({
         name: routes.SINGLE_MOVIE_PAGE.name,
         component: MoviePage,
         meta: {
-          requiresAuth: false
+          requiresAuth: true
         }
       }
     ]

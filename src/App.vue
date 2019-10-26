@@ -1,21 +1,29 @@
 <template>
+  <div class="grey darken-4">
   <v-app>
     <Header/>
-    <router-view/>
+    <div class="grey darken-4">
+        <router-view/>
+    </div>
+
   </v-app>
+</div>
 </template>
 
 <script>
 import Header from './components/Header';
-import Register from './components/Register';
 
 export default {
   name: 'App',
   components: {
-    Header,
-    Register
+    Header
   },
   data: () => ({
   }),
 };
 </script>
+
+<style>
+ 
+
+</style>

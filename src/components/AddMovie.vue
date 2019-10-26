@@ -1,4 +1,9 @@
 <template>
+  <v-card 
+    class=" pa-5"
+    max-width="900"
+    id='card'
+  >
   <form  class = 'add-movie-form'>
     <v-text-field
       v-model="title"
@@ -7,7 +12,8 @@
     ></v-text-field>
     <v-select
       v-model="genre"
-      :items="allGenres" item-value="id" item-text="name"
+      :items="genres" item-value="id" item-text="name"
+      :selected="selectedGenre"
       label="Genre"
       required
     ></v-select>
@@ -22,36 +28,50 @@
           v-model="description"
           hint="Movie description"
         ></v-textarea>
-
-
     <v-btn class="mr-4" @click="submit">submit</v-btn>
-    <v-btn @click="clear">clear</v-btn>
+    <v-btn class="mr-4" @click="sumbitOMDB">OMDB</v-btn>
   </form>
+  </v-card>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { log } from 'util'
-
 
 export default {
     name: 'AddMovie',
-    data: () => ({
-      title: '',
-      genre: null,
-      image:'',
-      description: '',
-      image: '',
-      checkbox: false,
-      genres: allGenres
-    }),
+    data(){
+      return {
+        title: '',
+        genre: null,
+        description: '',
+        image: '',
+        checkbox: false,
+        selectedGenre: 0
+      }
+    },
     methods:{
-        ...mapActions(['fetchGenres','addMovie']),
+        ...mapActions(['fetchGenres','addMovie','fetchMovieFromOMDB']),
         clear () {
-            this.$v.$reset()
             this.title = ''
             this.description = ''
             this.select = null
             this.image = ''
+
+      },
+      async setData(movie){        
+        movie.genre = movie.genre.split(',')[0].toLowerCase();
+        //mapiranje zanra sa omdb na id koji se cuva u bazi
+        this.genres.map(el => {                    
+          if(el.name === movie.genre){            
+            movie.genre_id = el.id;
+          }
+        }
+        )
+        this.genre = movie.genre_id,
+        this.title = movie.title;
+        this.description = movie.description;
+        this.select = movie.genre_id;
+        this.image = movie.image_url;
+               
       },
       async submit () {
         const movieObj = {
@@ -63,9 +83,18 @@ export default {
         await this.addMovie(movieObj);
         this.$router.push('/movies');
 
+      },
+      async sumbitOMDB(){
+        await this.fetchMovieFromOMDB(this.title);
+        this.setData(this.omdbMovie);
       }
     },
-    computed: mapGetters(['allGenres']),
+    computed: {
+      ...mapGetters({
+        genres: 'allGenres',
+        omdbMovie: 'getOmdbMovie'
+      }),
+    },
     created() {
       this.fetchGenres();
     }
@@ -77,4 +106,21 @@ export default {
      width: 70%;
      margin-left: 20%;
  }
+         #card{
+      width: 70%;
+        margin-left: 15%;
+    }
+
+  @media (max-width: 500px) {
+      .add-movie-form{
+      width: 90%;
+      margin-left: 5%;
+
+  }
+  #card{
+      width: 96%;
+      margin-left: 2%;
+    }
+  }
+
 </style>
